@@ -1,0 +1,23 @@
+{
+  "name": "inter-task-manager",
+  "version": "1.0.0",
+  "description": "a crud app for learning",
+  "homepage": "https://github.com/arslaniftikhar143/-intern-task-manager#readme",
+  "bugs": {
+    "url": "https://github.com/arslaniftikhar143/-intern-task-manager/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arslaniftikhar143/-intern-task-manager.git"
+  },
+  "license": "ISC",
+  "author": "arslan iftikhar",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+  "start": "node index"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
