@@ -7,6 +7,8 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
+const taskRoutes = require("./routes/task.routes");
+
 const port = process.env.PORT || 3000;
 
 async function connectDB() {
@@ -24,6 +26,8 @@ app.get("/", (req, res) => {
 app.get("/health", (req, res) => {
   res.send("OK");
 });
+
+app.use("/tasks", taskRoutes);
 
 app.listen(port, () => {
   console.log(`Api listening on port http://localhost:${port}`);

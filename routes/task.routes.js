@@ -1,12 +1,12 @@
 const router = require("express").Router();
 const Task = require("../models/task.models");
 
-router.get("/tasks", async (req, res) => {
+router.get("/", async (req, res) => {
   const tasks = await Task.find({});
-  res.send(tasks);
+  res.status(200).json(tasks);
 });
 
-router.post("/tasks", async (req, res) => {
+router.post("/", async (req, res) => {
   const { title, description, status, createdAt } = req.body;
 
   if (title || description || status || createdAt) {
@@ -20,7 +20,10 @@ router.post("/tasks", async (req, res) => {
     status,
     createdAt,
   });
-  res.send(tasks);
+
+  res.status(200).json({
+    message: "Task created sucessfully!",
+  });
 });
 
 module.exports = router;
