@@ -27,7 +27,7 @@ app.get("/health", (req, res) => {
   res.send("OK");
 });
 
-app.use("/tasks", taskRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.listen(port, () => {
   console.log(`Api listening on port http://localhost:${port}`);
