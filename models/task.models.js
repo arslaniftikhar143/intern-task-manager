@@ -12,11 +12,7 @@ const taskSchema = new Schema(
       required: true,
     },
     status: {
-      type: String,
-      required: true,
-    },
-    createdAt: {
-      type: String,
+      type: Boolean,
       required: true,
     },
   },
