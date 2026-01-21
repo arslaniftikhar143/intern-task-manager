@@ -7,6 +7,12 @@ const initialFormState = {
   status: false,
 };
 
+const stringRegex = /^(?=.*[A-Za-z])[A-Za-z0-9\s\W]+$/;
+
+function validateString(string) {
+  return stringRegex.test(string);
+}
+
 function App() {
   const [tasks, setTasks] = useState([]);
 
@@ -35,6 +41,10 @@ function App() {
 
   async function handleAddTask(e) {
     e.preventDefault();
+
+    if (!validateString(form.title)) alert("Enter valid title");
+    if (!validateString(form.description)) alert("Enter valid description");
+
     try {
       await axios.post("http://localhost:3000/api/tasks/", {
         title: form.title,
