@@ -3,7 +3,7 @@ const { isIdValid } = require("../utils/validate-id.js");
 const { validateString } = require("../utils/validate-string.js");
 
 async function handleGetTasks(req, res) {
-  const tasks = await Task.find({});
+  const tasks = await Task.find({}).sort({ _id: -1 });
   res.status(200).json(tasks);
 }
 async function handleGetTask(req, res) {
@@ -27,7 +27,7 @@ async function handleCreateTask(req, res) {
   try {
     const { title, description, status } = req.body;
 
-    if (!title || !description || !status) {
+    if (!title || !description) {
       return res
         .status(400)
         .send("Title, Description and Status are required fields");
@@ -43,7 +43,7 @@ async function handleCreateTask(req, res) {
     const createTask = await Task.create({
       title,
       description,
-      status,
+      status: false,
     });
 
     res.status(200).json({

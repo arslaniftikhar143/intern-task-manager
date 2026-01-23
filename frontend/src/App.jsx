@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
 const initialFormState = {
@@ -16,7 +16,12 @@ function validateString(string) {
 function App() {
   const [tasks, setTasks] = useState([]);
 
+  // const [filteredData, setFilteredData] = useState(tasks);
+
   const [form, setForm] = useState(initialFormState);
+
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("");
 
   const [editTask, setEditTask] = useState({
     id: "",
@@ -31,8 +36,6 @@ function App() {
   useEffect(() => {
     getTasks();
   }, []);
-
-  console.log("state tasks", tasks);
 
   //   {
   //     "_id": "696f8ac5c7e321d811b2f955",
@@ -105,6 +108,38 @@ function App() {
     await axios.delete(`http://localhost:3000/api/tasks/${id}`);
     await getTasks();
   }
+
+  // const handleSearch = (e) => {
+  //   const searchQuery = e.target.value;
+  //   if (!searchQuery) return;
+  //   setQuery(e.target.value);
+  //   const filteredResults = tasks.filter((task) => {
+  //     return (
+  //       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       task.description.toLowerCase().includes(searchQuery.toLowerCase())
+  //     );
+  //   });
+  //   setFilteredData(filteredResults);
+  // };
+
+  const filteredData = useMemo(() => {
+    console.log("status", status);
+    console.log("query", query);
+
+    return tasks.filter((task) => {
+      const matchesQuery =
+        task.title.toLowerCase().includes(query.toLowerCase()) ||
+        task.description.toLowerCase().includes(query.toLowerCase());
+
+      const matchesStatus =
+        status === "" ? true : task.status === (status === "true");
+
+      return matchesQuery && matchesStatus;
+    });
+  }, [tasks, query, status]);
+
+  console.log("tasks", tasks);
+  console.log("filtered tasks", filteredData);
 
   return (
     <>
@@ -249,9 +284,28 @@ function App() {
           </button>
         </form>
       )}
+      <div>
+        <input
+          type="search"
+          name="search-tasks"
+          id="search-tasks"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
 
+        <select
+          name="status"
+          id="task-status"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="true">Completed</option>
+          <option value="false">Not Completed</option>
+        </select>
+      </div>
       <ul id="todos">
-        {tasks.map((task) => (
+        {filteredData.map((task) => (
           <div key={task._id}>
             <li>
               {task.title} :{" "}
