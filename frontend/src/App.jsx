@@ -284,11 +284,12 @@ function App() {
           </button>
         </form>
       )}
-      <div>
+      <div className="task-filters">
         <input
           type="search"
           name="search-tasks"
           id="search-tasks"
+          placeholder="Search tasks here..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />

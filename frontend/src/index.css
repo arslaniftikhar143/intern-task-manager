@@ -132,7 +132,26 @@ h1 {
   background-color: #169630;
 }
 
-#cancel {
+.task-filters {
+  display: flex;
+  justify-content: space-between;
+  width: 35%;
+}
+
+.task-filters #search-tasks {
+  border-radius: 40px;
+  height: 40px;
+  outline: none;
+  padding: 0.5em 1em;
+  border: none;
+  width: 60%;
+}
+.task-filters #task-status {
+  border-radius: 40px;
+  height: 40px;
+  outline: none;
+  padding: 0.5em 1em;
+  border: none;
 }
 
 @media (max-width: 1000px) {
@@ -140,6 +159,9 @@ h1 {
     width: 75%;
   }
   #todos {
+    width: 75%;
+  }
+  .task-filters {
     width: 75%;
   }
 }
