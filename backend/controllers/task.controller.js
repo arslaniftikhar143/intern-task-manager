@@ -3,8 +3,26 @@ const { isIdValid } = require("../utils/validate-id.js");
 const { validateString } = require("../utils/validate-string.js");
 
 async function handleGetTasks(req, res) {
-  const tasks = await Task.find({}).sort({ _id: -1 });
-  res.status(200).json(tasks);
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+
+  console.log("page", page);
+  console.log("limit", limit);
+
+  const tasks = await Task.find({})
+    .skip(limit * (page - 1))
+    .limit(limit)
+    .sort({ _id: -1 });
+
+  const count = await Task.countDocuments();
+
+  console.log("total tasks", count);
+
+  res.status(200).json({
+    tasks,
+    currentPage: page,
+    totalPages: Math.ceil(count / limit),
+  });
 }
 async function handleGetTask(req, res) {
   try {

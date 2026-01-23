@@ -21,21 +21,30 @@ function App() {
   const [form, setForm] = useState(initialFormState);
 
   const [query, setQuery] = useState("");
+
   const [status, setStatus] = useState("");
+
+  const [pageLimit, setPageLimit] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const [editTask, setEditTask] = useState({
     id: "",
     ...initialFormState,
   });
 
+  const getTaskUrl = `http://localhost:3000/api/tasks/?page=${currentPage}&limit=${pageLimit}`;
+
   const getTasks = async () => {
-    const tasks = await axios.get("http://localhost:3000/api/tasks/");
-    setTasks(tasks.data);
+    const tasks = await axios.get(getTaskUrl);
+    setTasks(tasks.data?.tasks);
+    setCurrentPage(tasks.data?.currentPage);
+    setTotalPages(tasks.data?.totalPages);
   };
 
   useEffect(() => {
     getTasks();
-  }, []);
+  }, [pageLimit, currentPage]);
 
   //   {
   //     "_id": "696f8ac5c7e321d811b2f955",
@@ -104,23 +113,11 @@ function App() {
     });
     await getTasks();
   }
+
   async function handleDeleteTask(id) {
     await axios.delete(`http://localhost:3000/api/tasks/${id}`);
     await getTasks();
   }
-
-  // const handleSearch = (e) => {
-  //   const searchQuery = e.target.value;
-  //   if (!searchQuery) return;
-  //   setQuery(e.target.value);
-  //   const filteredResults = tasks.filter((task) => {
-  //     return (
-  //       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       task.description.toLowerCase().includes(searchQuery.toLowerCase())
-  //     );
-  //   });
-  //   setFilteredData(filteredResults);
-  // };
 
   const filteredData = useMemo(() => {
     console.log("status", status);
@@ -357,6 +354,33 @@ function App() {
           </div>
         ))}
       </ul>
+
+      <div>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+          (page) => {
+            return (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                disabled={currentPage === page}
+              >
+                {page}
+              </button>
+            );
+          },
+        )}
+
+        <select
+          name="limit"
+          id="page-limit"
+          value={pageLimit}
+          onChange={(e) => setPageLimit(e.target.value)}
+        >
+          <option value={10}>10 </option>
+          <option value={25}>25</option>
+          <option value={50}>50</option>
+        </select>
+      </div>
     </>
   );
 }
