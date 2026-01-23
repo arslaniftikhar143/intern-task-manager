@@ -1,4 +1,5 @@
 const Task = require("../models/task.models.js");
+const { isIdValid } = require("../utils/validate-id.js");
 const { validateString } = require("../utils/validate-string.js");
 
 async function handleGetTasks(req, res) {
@@ -6,68 +7,120 @@ async function handleGetTasks(req, res) {
   res.status(200).json(tasks);
 }
 async function handleGetTask(req, res) {
-  const task = await Task.findById(req.params.id);
-  res.status(200).json(task);
+  try {
+    if (!isIdValid(req.params.id))
+      return res.status(400).send("Task Id is not valid");
+
+    if (!task) {
+      return res.status(404).send("Task not found. Please provide valid Id.");
+    }
+
+    const task = await Task.findById(req.params.id);
+
+    res.status(200).json(task);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function handleCreateTask(req, res) {
-  const { title, description, status } = req.body;
+  try {
+    const { title, description, status } = req.body;
 
-  //   if (!title || !description || !status) {
-  //     return res.status(400).send("All fields are required");
-  //   }
+    if (!title || !description || !status) {
+      return res
+        .status(400)
+        .send("Title, Description and Status are required fields");
+    }
 
-  if (!validateString(title)) {
-    return res.status(400).send("Please enter valid title");
-  }
-  if (!validateString(description)) {
-    return res.status(400).send("Please enter valid description");
-  }
+    if (!validateString(title)) {
+      return res.status(400).send("Please enter valid title");
+    }
+    if (!validateString(description)) {
+      return res.status(400).send("Please enter valid description");
+    }
 
-  const createTask = await Task.create({
-    title,
-    description,
-    status,
-  });
-
-  res.status(200).json({
-    id: createTask._id,
-    message: "Task created sucessfully!",
-  });
-}
-
-async function handleEditTask(req, res) {
-  const { title, description, status } = req.body;
-
-  if (!validateString(title)) {
-    return res.status(400).send("Please enter valid title");
-  }
-  if (!validateString(description)) {
-    return res.status(400).send("Please enter valid description");
-  }
-
-  const editedTask = await Task.findByIdAndUpdate(
-    req.params.id,
-    {
+    const createTask = await Task.create({
       title,
       description,
       status,
-    },
-    { new: true },
-  );
+    });
 
-  res.status(200).json({
-    id: editedTask._id,
-    message: "Task edited sucessfully!",
-  });
+    res.status(200).json({
+      id: createTask._id,
+      message: "Task created sucessfully!",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function handleEditTask(req, res) {
+  try {
+    const { title, description, status } = req.body;
+
+    if (!req.params.id) return res.status(400).send("Please provide task id.");
+
+    if (!isIdValid(req.params.id))
+      return res.status(400).send("Task Id is not valid");
+
+    const alredyxistingTask = await Task.findById(req.params.id);
+
+    if (!alredyxistingTask) {
+      return res
+        .status(404)
+        .send("Task not found. Please provide valid task Id");
+    }
+
+    if (!validateString(title)) {
+      return res.status(400).send("Please enter valid title");
+    }
+    if (!validateString(description)) {
+      return res.status(400).send("Please enter valid description");
+    }
+
+    const editedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        description,
+        status,
+      },
+      { new: true },
+    );
+
+    res.status(200).json({
+      id: editedTask._id,
+      message: "Task edited sucessfully!",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function handleDeleteTask(req, res) {
-  await Task.findByIdAndDelete(req.params.id);
+  try {
+    if (!req.params.id) return res.status(404).send("Please provide task id.");
 
-  res.status(200).json({
-    message: "Task deleted sucessfully!",
-  });
+    if (!isIdValid(req.params.id))
+      return res.status(400).send("Task Id is not valid");
+
+    const alredyxistingTask = await Task.findById(req.params.id);
+
+    if (!alredyxistingTask) {
+      return res
+        .status(404)
+        .send("Task not found. Please provide valid task Id");
+    }
+
+    await Task.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      message: "Task deleted sucessfully!",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = {

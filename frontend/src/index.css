@@ -54,17 +54,31 @@ h1 {
   font-family: inherit;
 }
 
-#add {
-  background-color: #1b2651;
+.add-form button {
   padding: 0.5em 2em;
   color: white;
   border-radius: 40px;
   height: 40px;
   border: none;
 }
+
+#add {
+  background-color: #1b2651;
+}
 #add:hover {
   cursor: pointer;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+#cancel {
+  background-color: transparent;
+  border-color: #1b2651;
+  border: 1px solid #1b2651;
+  color: #1b2651;
+}
+
+#cancel:hover {
+  cursor: pointer;
+  box-shadow: 0px 2px 5px rgba(0, 0, 5, 0.15);
 }
 
 #todos {
@@ -111,8 +125,14 @@ h1 {
 #toggle-button {
   background-color: #166c96;
 }
+#edit-button {
+  background-color: #1b2651;
+}
 #todos .completed {
   background-color: #169630;
+}
+
+#cancel {
 }
 
 @media (max-width: 1000px) {
