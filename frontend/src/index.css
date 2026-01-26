@@ -15,13 +15,14 @@ h1 {
 }
 
 #root {
-  padding-top: 2em;
-  height: 100%;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  height: 100dvh;
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 2em;
+  gap: 1em;
 }
 
 .add-form {
@@ -54,17 +55,31 @@ h1 {
   font-family: inherit;
 }
 
-#add {
-  background-color: #1b2651;
+.add-form button {
   padding: 0.5em 2em;
   color: white;
   border-radius: 40px;
   height: 40px;
   border: none;
 }
+
+#add {
+  background-color: #1b2651;
+}
 #add:hover {
   cursor: pointer;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+#cancel {
+  background-color: transparent;
+  border-color: #1b2651;
+  border: 1px solid #1b2651;
+  color: #1b2651;
+}
+
+#cancel:hover {
+  cursor: pointer;
+  box-shadow: 0px 2px 5px rgba(0, 0, 5, 0.15);
 }
 
 #todos {
@@ -111,8 +126,33 @@ h1 {
 #toggle-button {
   background-color: #166c96;
 }
+#edit-button {
+  background-color: #1b2651;
+}
 #todos .completed {
   background-color: #169630;
+}
+
+.task-filters {
+  display: flex;
+  justify-content: space-between;
+  width: 35%;
+}
+
+.task-filters #search-tasks {
+  border-radius: 40px;
+  height: 40px;
+  outline: none;
+  padding: 0.5em 1em;
+  border: none;
+  width: 60%;
+}
+.task-filters #task-status {
+  border-radius: 40px;
+  height: 40px;
+  outline: none;
+  padding: 0.5em 1em;
+  border: none;
 }
 
 @media (max-width: 1000px) {
@@ -120,6 +160,9 @@ h1 {
     width: 75%;
   }
   #todos {
+    width: 75%;
+  }
+  .task-filters {
     width: 75%;
   }
 }
