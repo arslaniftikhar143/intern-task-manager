@@ -1,22 +1,20 @@
-const Task = require("../models/task.models.js");
+const {
+  taskList,
+  findTaskById,
+  createTask,
+  editTask,
+  deleteTask,
+} = require("../services/task.service.js");
+
 const { isIdValid } = require("../utils/validate-id.js");
+
 const { validateString } = require("../utils/validate-string.js");
 
 async function handleGetTasks(req, res) {
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 10;
 
-  console.log("page", page);
-  console.log("limit", limit);
-
-  const tasks = await Task.find({})
-    .skip(limit * (page - 1))
-    .limit(limit)
-    .sort({ _id: -1 });
-
-  const count = await Task.countDocuments();
-
-  console.log("total tasks", count);
+  const { tasks, count } = await taskList({ limit, page });
 
   res.status(200).json({
     tasks,
@@ -29,11 +27,11 @@ async function handleGetTask(req, res) {
     if (!isIdValid(req.params.id))
       return res.status(400).send("Task Id is not valid");
 
+    const task = await findTaskById(req.params.id);
+
     if (!task) {
       return res.status(404).send("Task not found. Please provide valid Id.");
     }
-
-    const task = await Task.findById(req.params.id);
 
     res.status(200).json(task);
   } catch (error) {
@@ -43,7 +41,7 @@ async function handleGetTask(req, res) {
 
 async function handleCreateTask(req, res) {
   try {
-    const { title, description, status } = req.body;
+    const { title, description } = req.body;
 
     if (!title || !description) {
       return res
@@ -58,14 +56,13 @@ async function handleCreateTask(req, res) {
       return res.status(400).send("Please enter valid description");
     }
 
-    const createTask = await Task.create({
+    const createdTask = createTask({
       title,
       description,
-      status: false,
     });
 
     res.status(200).json({
-      id: createTask._id,
+      id: createdTask._id,
       message: "Task created sucessfully!",
     });
   } catch (error) {
@@ -76,13 +73,13 @@ async function handleCreateTask(req, res) {
 async function handleEditTask(req, res) {
   try {
     const { title, description, status } = req.body;
+    const { id } = req.params;
 
-    if (!req.params.id) return res.status(400).send("Please provide task id.");
+    if (!id) return res.status(400).send("Please provide task id.");
 
-    if (!isIdValid(req.params.id))
-      return res.status(400).send("Task Id is not valid");
+    if (!isIdValid(id)) return res.status(400).send("Task Id is not valid");
 
-    const alredyxistingTask = await Task.findById(req.params.id);
+    const alredyxistingTask = await findTaskById(id);
 
     if (!alredyxistingTask) {
       return res
@@ -97,15 +94,7 @@ async function handleEditTask(req, res) {
       return res.status(400).send("Please enter valid description");
     }
 
-    const editedTask = await Task.findByIdAndUpdate(
-      req.params.id,
-      {
-        title,
-        description,
-        status,
-      },
-      { new: true },
-    );
+    const editedTask = await editTask({ id, title, description, status });
 
     res.status(200).json({
       id: editedTask._id,
@@ -123,7 +112,7 @@ async function handleDeleteTask(req, res) {
     if (!isIdValid(req.params.id))
       return res.status(400).send("Task Id is not valid");
 
-    const alredyxistingTask = await Task.findById(req.params.id);
+    const alredyxistingTask = await findTaskById(req.params.id);
 
     if (!alredyxistingTask) {
       return res
@@ -131,7 +120,7 @@ async function handleDeleteTask(req, res) {
         .send("Task not found. Please provide valid task Id");
     }
 
-    await Task.findByIdAndDelete(req.params.id);
+    await deleteTask(req.params.id);
 
     res.status(200).json({
       message: "Task deleted sucessfully!",
