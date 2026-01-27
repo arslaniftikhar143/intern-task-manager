@@ -9,10 +9,12 @@ async function taskList({ limit, page }) {
 
   return { tasks, count };
 }
+
 async function findTaskById(id) {
   const task = await Task.findById(id);
   return task;
 }
+
 async function createTask({ title, description }) {
   const createdTask = await Task.create({
     title,
