@@ -1,4 +1,3 @@
-import React from "react";
 export function AddTask({ handleAddTask, setForm, form }) {
   return (
     <form className="add-form" onSubmit={handleAddTask}>
@@ -16,7 +15,7 @@ export function AddTask({ handleAddTask, setForm, form }) {
         value={form.description}
         onChange={(e) => setForm({ ...form, description: e.target.value })}
       />
-      <div
+      {/* <div
         style={{
           display: "flex",
           gap: "1em",
@@ -39,7 +38,7 @@ export function AddTask({ handleAddTask, setForm, form }) {
         >
           Task Completed
         </label>
-      </div>
+      </div> */}
       <button id="add" type="submit">
         Add Task
       </button>

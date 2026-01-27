@@ -6,25 +6,28 @@ export function Pagination({
   totalPages,
 }) {
   return (
-    <div>
-      {Array.from(
-        {
-          length: totalPages,
-        },
-        (_, index) => index + 1,
-      ).map((page) => {
-        return (
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            disabled={currentPage === page}
-          >
-            {page}
-          </button>
-        );
-      })}
+    <div className="pagination">
+      <div className="pagination-buttons">
+        {Array.from(
+          {
+            length: totalPages,
+          },
+          (_, index) => index + 1,
+        ).map((page) => {
+          return (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              disabled={currentPage === page}
+            >
+              {page}
+            </button>
+          );
+        })}
+      </div>
 
       <select
+        className="paginaton-limit"
         name="limit"
         id="page-limit"
         value={pageLimit}
