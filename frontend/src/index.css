@@ -153,6 +153,43 @@ h1 {
   outline: none;
   padding: 0.5em 1em;
   border: none;
+  appearance: none;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.pagination-buttons {
+  display: flex;
+  gap: 4px;
+}
+.pagination-buttons button {
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  background-color: white;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  cursor: pointer;
+  transition: all 0.3 ease-in;
+}
+.pagination-buttons button:hover {
+  box-shadow: rgba(0, 0, 0, 0.26) 0px 1px 4px;
+}
+.pagination-buttons button:disabled {
+  background-color: #1b2651;
+  color: white;
+}
+
+.paginaton-limit {
+  border-radius: 40px;
+  height: 40px;
+  outline: none;
+  padding: 0.5em 1em;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 @media (max-width: 1000px) {
