@@ -46,16 +46,6 @@ function TaskManager() {
     getTasks();
   }, [pageLimit, currentPage]);
 
-  //   {
-  //     "_id": "696f8ac5c7e321d811b2f955",
-  //     "title": "Test",
-  //     "description": "Test description",
-  //     "status": false,
-  //     "createdAt": "2026-01-20T14:01:41.427Z",
-  //     "updatedAt": "2026-01-20T14:01:41.427Z",
-  //     "__v": 0
-  // }
-
   async function handleAddTask(e) {
     e.preventDefault();
 
