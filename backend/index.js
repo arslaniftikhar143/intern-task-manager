@@ -1,10 +1,10 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const mongoose = require("mongoose");
 const morgan = require("morgan");
 
 const taskRoutes = require("./routes/task.routes");
+const { connectDB } = require("./config/db");
 
 const app = express();
 
@@ -13,15 +13,14 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
+app.use((req, res, next) => {
+  console.log("hello from middleware 1");
+  next();
+});
+
 const port = process.env.PORT || 3000;
 
-async function connectDB() {
-  await mongoose.connect(process.env.MONGO_URL);
-}
-
-connectDB()
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+connectDB();
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
