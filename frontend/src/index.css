@@ -145,7 +145,6 @@ h1 {
 .task-filters {
   display: flex;
   border-radius: 40px;
-  background-color: rgb(48, 48, 48);
   justify-content: space-between;
   width: 35%;
 }
@@ -154,7 +153,7 @@ h1 {
   border-radius: 40px;
   height: 40px;
   outline: none;
-  background-color: rgb(16, 191, 222);
+
   padding: 0.5em 1em;
   border: none;
   width: 60%;
@@ -163,7 +162,7 @@ h1 {
 .task-filters #task-status {
   border-radius: 40px;
   height: 40px;
-  background-color: rgb(16, 191, 222);
+
   outline: none;
   padding: 0.5em 1em;
   border: none;
