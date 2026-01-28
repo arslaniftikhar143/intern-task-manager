@@ -39,12 +39,14 @@ h1 {
   padding: 0.5em 1em;
   border: none;
 }
+
 .add-form #status {
   all: reset;
   height: 20px;
   width: 20px;
   accent-color: #1b2651;
 }
+
 .add-form textarea {
   border-radius: 20px;
   resize: vertical;
@@ -66,10 +68,12 @@ h1 {
 #add {
   background-color: #1b2651;
 }
+
 #add:hover {
   cursor: pointer;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 #cancel {
   background-color: transparent;
   border-color: #1b2651;
@@ -100,6 +104,7 @@ h1 {
   width: 100%;
   justify-content: space-between;
 }
+
 #todos div li {
   flex: 1;
   white-space: wrap;
@@ -116,6 +121,7 @@ h1 {
   color: white;
   white-space: nowrap;
 }
+
 #todos button:hover {
   cursor: pointer;
 }
@@ -123,18 +129,23 @@ h1 {
 #delete-button {
   background-color: #cd2028;
 }
+
 #toggle-button {
   background-color: #166c96;
 }
+
 #edit-button {
   background-color: #1b2651;
 }
+
 #todos .completed {
   background-color: #169630;
 }
 
 .task-filters {
   display: flex;
+  border-radius: 40px;
+  background-color: rgb(48, 48, 48);
   justify-content: space-between;
   width: 35%;
 }
@@ -143,17 +154,21 @@ h1 {
   border-radius: 40px;
   height: 40px;
   outline: none;
+  background-color: rgb(16, 191, 222);
   padding: 0.5em 1em;
   border: none;
   width: 60%;
 }
+
 .task-filters #task-status {
   border-radius: 40px;
   height: 40px;
+  background-color: rgb(16, 191, 222);
   outline: none;
   padding: 0.5em 1em;
   border: none;
   appearance: none;
+  background-size: 1em;
 }
 
 .pagination {
@@ -161,10 +176,12 @@ h1 {
   align-items: center;
   gap: 1em;
 }
+
 .pagination-buttons {
   display: flex;
   gap: 4px;
 }
+
 .pagination-buttons button {
   height: 40px;
   width: 40px;
@@ -175,9 +192,11 @@ h1 {
   cursor: pointer;
   transition: all 0.3 ease-in;
 }
+
 .pagination-buttons button:hover {
   box-shadow: rgba(0, 0, 0, 0.26) 0px 1px 4px;
 }
+
 .pagination-buttons button:disabled {
   background-color: #1b2651;
   color: white;
@@ -196,9 +215,11 @@ h1 {
   .add-form {
     width: 75%;
   }
+
   #todos {
     width: 75%;
   }
+
   .task-filters {
     width: 75%;
   }
