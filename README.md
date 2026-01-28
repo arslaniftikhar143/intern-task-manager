@@ -11,5 +11,5 @@ Add the required variables in .env file. You should have Node and Git installed 
 Open two terminals and move to frontend and backend folders. run `npm i` command in both terminals. 
 
 ### Run Project
-After installing required packages run `npm run dev` in both terminals again. Frontend will run on 5173 port and backend will run on 3000 port.
+After installing required packages run `npm start` in terminal opend in root directory. It automatically run the Frontend on 5173 port and backend on 3000 port.
 
