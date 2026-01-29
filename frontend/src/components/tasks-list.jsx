@@ -31,40 +31,41 @@ export function TasksList({
                 {task.description}
               </span>
             </li>
-
-            <button
-              type="button"
-              onClick={() => {
-                handleToggleTask(task._id);
-              }}
-              id="toggle-button"
-              className={task?.status ? "completed" : ""}
-            >
-              {task.status ? "Mark Not Done" : "Mark Done"}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setEditTask({
-                  id: task._id,
-                  title: task.title,
-                  description: task.description,
-                  status: task.status,
-                });
-              }}
-              id="edit-button"
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              id="delete-button"
-              onClick={() => {
-                handleDeleteTask(task._id);
-              }}
-            >
-              Delete Task
-            </button>
+            <span className="task-actions">
+              <button
+                type="button"
+                onClick={() => {
+                  handleToggleTask(task._id);
+                }}
+                id="toggle-button"
+                className={task?.status ? "completed" : ""}
+              >
+                {task.status ? "Mark Not Done" : "Mark Done"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setEditTask({
+                    id: task._id,
+                    title: task.title,
+                    description: task.description,
+                    status: task.status,
+                  });
+                }}
+                id="edit-button"
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                id="delete-button"
+                onClick={() => {
+                  handleDeleteTask(task._id);
+                }}
+              >
+                Delete Task
+              </button>
+            </span>
           </div>
         ))
       )}

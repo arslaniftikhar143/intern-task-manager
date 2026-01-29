@@ -8,6 +8,7 @@ body {
   height: 100%;
   width: 100%;
   background-color: #edeae1;
+  padding: 0em 1em;
 }
 
 h1 {
@@ -210,6 +211,15 @@ h1 {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+.task-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 0.5em;
+}
+
 @media (max-width: 1000px) {
   .add-form {
     width: 75%;
@@ -221,5 +231,22 @@ h1 {
 
   .task-filters {
     width: 75%;
+  }
+}
+
+@media (max-width: 500px) {
+  .add-form {
+    width: 100%;
+  }
+
+  #todos {
+    width: 100%;
+  }
+  #todos > div {
+    flex-direction: column;
+  }
+
+  .task-filters {
+    width: 100%;
   }
 }
